@@ -5,7 +5,7 @@ const SortPopup = ({items}) => {
   const [activeItem, setActiveItem] = React.useState(0);
   const [visiblePopup, setVisiblePopup] = React.useState(false);
 
-  const sortRef = React.useRef();
+  const sortRef = React.useRef(null);
 
   const onPopupClick = (e) => {
     if (!e.path.includes(sortRef.current)) {

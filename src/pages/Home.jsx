@@ -3,7 +3,7 @@ import SortPopup from "../components/SortPopup";
 import PizzaCard from "../components/PizzaCard";
 import React from "react";
 
-const Home = () => {
+const Home = ({items}) => {
   return(
     <div className="container">
       <div className="content__top">
@@ -19,15 +19,7 @@ const Home = () => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        <PizzaCard />
-        <PizzaCard />
-        <PizzaCard />
-        <PizzaCard />
-        <PizzaCard />
-        <PizzaCard />
-        <PizzaCard />
-        <PizzaCard />
-        <PizzaCard />
+        {items.map(item => <PizzaCard key={item.id} {...item}/>)}
       </div>
     </div>
   );

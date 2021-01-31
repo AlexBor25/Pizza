@@ -1,28 +1,53 @@
 import React from "react";
+import cn from 'classnames';
+import PropTypes from 'prop-types';
 
-const PizzaCard = () => {
+const PizzaCard = ({imageUrl, name, price, types, sizes}) => {
+
+  const typeNames = ['тонкое', 'традиционное'];
+
+  const pizzaSizes = [26, 30, 40];
+
+  const [activeType, setActiveType] = React.useState(types[0]);
+
+  const [activeSize, setActiveSize] = React.useState(0);
+
+  const onSelectType = (index) => {
+    setActiveType(index);
+  }
+
+  const onSelectSize = (index) => {
+    setActiveSize(index);
+  }
+
   return (
     <div className="pizza-block">
       <img
         className="pizza-block__image"
-        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+        src={imageUrl}
         alt="Pizza"
       />
-      <h4 className="pizza-block__title">Чизбургер-пицца</h4>
+      <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {typeNames.map((type, index) => <li key={`${type}_${index}`}
+                                          onClick={() => onSelectType(index)}
+                                          className={cn({
+                                            active: activeType === index,
+                                            disabled: !types.includes(index),
+                                          })}>{type}</li>)}
         </ul>
         <ul>
-          <li className="active">26 см.
-          </li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {pizzaSizes.map((size, index) => <li key={`${size}_${index}`}
+                                          onClick={() => onSelectSize(index)}
+                                               className={cn({
+                                                 active: activeSize === index,
+                                                 disabled: !sizes.includes(size),
+                                               })}>{size} см.</li>)}
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от 395 ₽</div>
+        <div className="pizza-block__price">От {price} Р</div>
         <div className="button button--outline button--add">
           <svg
             width="12"
@@ -43,4 +68,18 @@ const PizzaCard = () => {
     </div>
   );
 }
+
+PizzaCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  types: PropTypes.arrayOf(PropTypes.number).isRequired,
+  sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
+  price: PropTypes.number.isRequired,
+  imageUrl: PropTypes.string.isRequired
+};
+
+PizzaCard.defaultProps = {
+  types: [],
+  sizes: []
+};
+
 export default PizzaCard;
